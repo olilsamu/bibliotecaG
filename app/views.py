@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,get_object_or_404,request
+from django.shortcuts import render
 from .models import *
 from django.views import View
 from django.contrib import messages
@@ -9,7 +9,7 @@ class IndexView(View):
         return render(request, 'index.html')
 class LivrosView(View):
     def get(self, request, *args, **kwargs):
-        livros = Livros.objects.all()
+        livros = Livro.objects.all()
         return render(request, 'livros.html', {'livros':livros})
 # def post(self, request, *args, **kwargs):
 
@@ -19,17 +19,17 @@ class EmprestimoView(View):
         return render(request, 'reserva.html', {'reservas': reservas})
 class CidadesView(View):
     def get(self, request, *args, **kwargs):
-        cidades = Cidades.objects.all()
+        cidades = Cidade.objects.all()
         return render(request, 'cidade.html', {'cidades':cidades})
 
 class AutoresView(View):
     def get(self, request, *args, **kwargs):
-        autores = Autores.objects.all()
+        autores = Autor.objects.all()
         return render(request, 'autor.html', {'autores':autores})
     
 class EditorasView(View):
     def get(self, request, *args, **kwargs):
-        editoras = Editoras.objects.all()
+        editoras = Editora.objects.all()
         return render(request, 'editora.html',{'editoras': editoras})    
 
 class LeitoresView(View):
@@ -39,9 +39,10 @@ class LeitoresView(View):
 
 class GenerosView(View):
     def get(self, request, *args, **kwargs):
-        generos = Generos.objects.all()
+        generos = Genero.objects.all()
         return render(request, 'genero.html', {'generos':generos})
     
+
 
 
 

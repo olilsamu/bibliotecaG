@@ -1,74 +1,63 @@
 from django.db import models
 
 # Create your models here.
-class Cidades(models.Model):
+class Leitor(models.Model):
     nome = models.CharField(max_length=100)
+    cpf = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name_plural = "Cidades"
-
+        verbose_name_plural = "Usuários"
 
     def __str__(self):
         return self.nome
 
-class Generos(models.Model):
+class Genero(models.Model):
     nome = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name_plural = "Generos"
-
-
-    def __str__(self):
-        return self.nome   
-
-class Editoras(models.Model):
-    nome = models.CharField(max_length=100)
-
-    class Meta:
-        verbose_name_plural = "Editoras"
-
+        verbose_name_plural = "Gêneros"
 
     def __str__(self):
         return self.nome
 
-class Autores(models.Model):
+class Cidade(models.Model):
     nome = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nome
+
+class Editora(models.Model):
+    nome = models.CharField(max_length=100)
+    site = models.CharField(max_length=500)
+    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.nome
+
+class Autor(models.Model):
+    nome = models.CharField(max_length=100)
+    cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = "Autores"
 
-
     def __str__(self):
         return self.nome
 
-class Livros(models.Model):
+class Livro(models.Model):
     nome = models.CharField(max_length=100)
-
-    class Meta:
-        verbose_name_plural = "Livros"
-
+    genero = models.ForeignKey(Genero, on_delete=models.CASCADE)
+    autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
+    editora = models.ForeignKey(Editora, on_delete=models.CASCADE)
+    preco = models.DecimalField(max_digits=10, decimal_places=2)
+    datapublicacao = models.DateField()
 
     def __str__(self):
         return self.nome
 
 class Emprestimo(models.Model):
-    nome = models.CharField(max_length=100)
-
-    class Meta:
-        verbose_name_plural = "Emprestimo"
-
-
-    def __str__(self):
-        return self.nome  
-
-
-class Leitor(models.Model):
-    nome = models.CharField(max_length=100)
-
-    class Meta:
-        verbose_name_plural = "Leitor"
-
-
-    def __str__(self):
-        return self.nome             
-
+    dataemprestimo = models.DateField()
+    livro = models.ForeignKey(Livro, on_delete=models.CASCADE)
+    datadevolucao = models.DateField()
+    leitor = models.ForeignKey(Leitor, on_delete=models.CASCADE)
